@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<h1>This is a Heading</h1>
+
+<form>
+  Yes:
+  <input type="radio" id="yes" name="Yes" checked="checked">
+  <br>
+  No:
+  <input type="radio" name="No">
+  <br><br>
+  <button id="submit" type="submit" value="Submit">Submit</button>
+</form> 
+
+<script>
+$( "#submit" ).click(function() {
+    $.ajax({
+      url: "http://0.0.0.0:8000/submit.py",
+      data: {
+        yes: $( "#yes" ).val()
+        no: $( "#no" ).val()
+      },
+      success: function( result ) {
+        // alert(result);
+        console.log(result);
+      }
+    });
+    return false;
+});
+</script>
+</body>
+</html>
