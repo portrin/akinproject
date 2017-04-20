@@ -12,18 +12,18 @@
 
 <form>
   Yes:
-  <input type="radio" id="yes" name="Yes" checked="checked">
+  <input type="radio" id="yes" name="choice" checked="checked">
   <br>
   No:
-  <input type="radio" name="No">
+  <input type="radio" name="choice">
   <br><br>
-  <button id="submit" type="submit" value="Submit">Submit</button>
+  <button id="submit">Submit</button>
 </form> 
 
 <script>
 $( "#submit" ).click(function() {
     $.ajax({
-      url: "http://0.0.0.0:8000/submit.py",
+      url: "http://0.0.0.0:8000/cgi-bin/submit.py",
       data: {
         yes: $( "#yes" ).val()
         no: $( "#no" ).val()
