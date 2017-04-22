@@ -1,4 +1,5 @@
-	var Apinator = function()
+
+    var Apinator = function()
 	{
 		this.url = 'http://api-en4.akinator.com/ws/';
 		this.session, this.signature, this.onAsk;

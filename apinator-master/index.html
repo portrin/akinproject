@@ -11,20 +11,22 @@
           <input type="button" id="no" value="no"/>
         </form>
 		<script>
+            var i = 1;
 			var api = new Apinator();
-
 			api.hello(function(question, answers) {
 			
 				//var i = Math.floor(Math.random() * 5);
 
                 document.getElementById("question").innerHTML = question.text;
-				
-                $("#yes").onclick(function(){
-                    var i = 1
-                });
-                $("#no").onclick(function(){
-                    var i = 2;
-                });    
+                while(1){
+                    $("#yes").onclick(function(i){
+                        return i = 0;
+                    });
+                    $("#no").onclick(function(i){
+                        return i = 1;
+                    });
+                return i;
+                }    
                 console.log(question.text, answers[i].text);            
                 api.sendAnswer(answers[i].id);
 			
