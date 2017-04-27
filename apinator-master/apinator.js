@@ -12,7 +12,7 @@
 		this.onFound = onFound;
 	
 		jQuery.ajax({
-			url: this.url + 'new_session?partner=1&player=apinator',
+			url: this.url + 'new_session?partner=1&player=desktopPlayer&constraint=ETAT<>\'AV\'',
 			dataType: 'jsonp',
 			error: function(){console.error(arguments)},
 			success: function(response) {
@@ -46,7 +46,7 @@
 			});
 		});
 		
-		return {question: question, answers: answers, last: parameters.progression == 100};
+		return {question: question, answers: answers, last: parameters.progression > 96};
 	}
 	
 	Apinator.prototype.sendAnswer = function(answerId)

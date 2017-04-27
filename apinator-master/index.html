@@ -6,37 +6,37 @@
 		<script type="text/javascript" src="jquery-2.1.0.min.js"></script>
 		<script type="text/javascript" src="apinator.js"></script>
         <p id="question"></p>
-        <form>
-          <input type="button" id="yes" value="yes"/>
-          <input type="button" id="no" value="no"/>
+        <p id="result"></p>
+        <form id="answers">
         </form>
 		<script>
-            var i = 1;
 			var api = new Apinator();
 			api.hello(function(question, answers) {
 			
 				//var i = Math.floor(Math.random() * 5);
-
+                console.log(this.step);
                 document.getElementById("question").innerHTML = question.text;
-                while(1){
-                    $("#yes").onclick(function(i){
-                        return i = 0;
-                    });
-                    $("#no").onclick(function(i){
-                        return i = 1;
-                    });
-                return i;
-                }    
-                console.log(question.text, answers[i].text);            
-                api.sendAnswer(answers[i].id);
+                for(var i in answers){
+                    document.getElementById("answers").innerHTML += '<input type="button" onclick="send(\'' + answers[i].id + '\')" value="' + answers[i].text + '" /><br/>';
+                }
+
+                //console.log(question.text, answers[i].text);            
+                //api.sendAnswer(answers[i].id);
 			
 			}, function(characters) {
 			
 				jQuery.each(characters, function (i, char) {
-					console.log('"' + char.name + '" (' + char.probability + ')');
+				    console.log('"' + char.name + '" (' + char.probability + ')');
+                    document.getElementById("result").innerHTML += '"' + char.name + '" (' + char.probability + ')' + "</br>";
 				});
 			
 			});
+
+           function send(ans){
+                document.getElementById("answers").innerHTML = '';
+                console.log(ans);
+                api.sendAnswer(ans);
+           }
 
 		</script>
 	</head>
