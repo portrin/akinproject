@@ -3,26 +3,53 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Apinator</title>
-		<script type="text/javascript" src="jquery-2.1.0.min.js"></script>
-		<script type="text/javascript" src="apinator.js"></script>
-        <p id="question"></p>
+		<script type="text/javascript" src="./jquery-2.1.0.min.js"></script>
+		<script type="text/javascript" src="./apinator.js"></script>
+		<script type="text/javascript" src="./howler.min.js"></script>
+		<script type="text/javascript" src='./lame.min.js'></script>
+        <h1 id="question"></h1>
         <p id="result"></p>
+        <audio id="audio">
+		</audio>
         <form id="answers">
         </form>
 		<script>
+
 			var api = new Apinator();
 			api.hello(function(question, answers) {
 			
-				//var i = Math.floor(Math.random() * 5);
                 console.log(this.step);
                 document.getElementById("question").innerHTML = question.text;
-                for(var i in answers){
-                    document.getElementById("answers").innerHTML += '<input type="button" onclick="send(\'' + answers[i].id + '\')" value="' + answers[i].text + '" /><br/>';
-                }
+                //send question to lambda here ********************************
+			    $.ajax({
 
-                //console.log(question.text, answers[i].text);            
-                //api.sendAnswer(answers[i].id);
-			
+			         url: 'https://g86otrj9n7.execute-api.ap-southeast-1.amazonaws.com/prod',
+			         data: { text: question.text },
+			         type: "GET",
+			         beforeSend: function(xhr){xhr.setRequestHeader('Content-Type', 'application/json');},
+			         success: function(data, status) { 
+			         	
+			         	var mp3Data = [];
+						var mp3encoder = new lamejs.Mp3Encoder(1, 44100, 128); 
+						// var mp3Tmp = mp3encoder.encodeBuffer(data.AudioStream.data); //encode mp3
+						// mp3Data.push(mp3Tmp);
+						// console.debug(mp3Data);
+						// var blob = new Blob(mp3Data, {type: 'audio/mp3'});
+						// var url = window.URL.createObjectURL(blob);
+						// console.log('MP3 URl: ', url);
+						// document.getElementById("audio").innerHTML = '<source src="' + url + '" type="audio/mp3" />';
+						// document.getElementById("audio").play();
+			         	// console.log("Data: " + data.AudioStream.data + "\nStatus: " + status); 
+
+			         }, error: function(error) { 
+			         	console.log(error);
+			         }
+			      });
+
+
+                for(var i in answers) {
+                    document.getElementById("answers").innerHTML += '<input type="button" onclick="send(\'' + answers[i].id + '\')" value="' + answers[i].text + '" /><br/><br/>';
+                }
 			}, function(characters) {
 			
 				jQuery.each(characters, function (i, char) {
@@ -30,7 +57,7 @@
                     document.getElementById("result").innerHTML += '"' + char.name + '" (' + char.probability + ')' + "</br>";
 				});
 			
-			});
+			   });
 
            function send(ans){
                 document.getElementById("answers").innerHTML = '';
